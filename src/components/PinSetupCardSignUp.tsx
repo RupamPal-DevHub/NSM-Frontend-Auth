@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
-import { Eye, EyeClosed } from "lucide-react"; // Visibility icons
+import { Eye, EyeClosed } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { registerCreatePin } from "../apiCalls/apiCalls";
 
 const PinSetupCardReset = () => {
   const navigate = useNavigate();
@@ -53,11 +54,22 @@ const PinSetupCardReset = () => {
     }
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const pinValue: string = pin.join("");
     const confirmPinValue: string = confirmPin.join("");
+    const data = { pin: pinValue, confirmPin: confirmPinValue };
     if (pinValue === confirmPinValue && pinValue.length === 6) {
-      navigate("/signupdone");
+      try {
+        console.log(data);
+        await registerCreatePin(data);
+        navigate("/signupdone");
+      } catch (error: any) {
+        alert(error.response?.data.message);
+        console.error(
+          "Registration failed:",
+          error.response?.data || error.message
+        );
+      }
 
       console.log({
         pin: pinValue,
@@ -68,9 +80,8 @@ const PinSetupCardReset = () => {
         pin: pinValue,
         confirmPin: confirmPinValue,
       });
-      console.log(pinValue.length, confirmPinValue.length);
-      console.log(
-        "Pin Setup Failed! please use same pin in both fields and make sure it's 6 digits long."
+      alert(
+        "Pin Setup Failed! Use same pin in both fields and make sure it's 6 digits long."
       );
     }
   };
@@ -90,7 +101,7 @@ const PinSetupCardReset = () => {
           onChange={(e) => handlePinChange(e, index, setState, state)}
           onKeyDown={(e) => handleKeyDown(e, index, setState, state)}
           maxLength={1}
-          className="w-12 h-12 text-center text-xl bg-blue-50 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-10 h-10 sm:w-12 sm:h-12  text-center text-xs md:text-xl bg-blue-50 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-maintheme"
         />
       </div>
     ));

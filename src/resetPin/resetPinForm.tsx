@@ -1,12 +1,51 @@
 import { ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { resetPinCaptcha, forgotPinRequest } from "../apiCalls/apiCalls";
 
 const ResetPinForm = () => {
   const Navigate = useNavigate();
-  function handleSubmit(e: any) {
+
+  const [captcha, setCaptcha] = useState({});
+
+  useEffect(() => {
+    const fetchCaptcha = async () => {
+      try {
+        const data: any = await resetPinCaptcha();
+        if (data) {
+          setCaptcha(data.image);
+        } else {
+          console.error("Captcha not found in response");
+        }
+      } catch (error) {
+        console.error("Error fetching captcha:", error);
+      }
+    };
+    fetchCaptcha();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    Navigate("/resetpinpass");
-  }
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data: any = {
+      email: formData.get("email")?.toString().trim(),
+      captcha: formData.get("captcha")?.toString().trim(),
+    };
+
+    console.log("Form Data:", data);
+
+    try {
+      await forgotPinRequest(data);
+      Navigate("/resetpinpass");
+    } catch (error: any) {
+      alert(error.response?.data.message);
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
   return (
     <>
       <ArrowLeft
@@ -41,8 +80,8 @@ const ResetPinForm = () => {
                   />
                 </label>
 
-                <div className="w-32 h-14 border border-gray-700">
-                  <img src="" alt="Captcha" />
+                <div className="w-28 border border-gray-700 mt-4">
+                  <img src={`${captcha}`} alt="Captcha" />
                 </div>
                 <input
                   type="text"

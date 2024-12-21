@@ -16,7 +16,7 @@ const SignUpDone = () => {
               <span className="text-2xl">Welcome Aboard </span>
             </p>
           </div>
-          <div className="w-full sm:w-max flex justify-center m-10 sm:m-0">
+          <div className="w-full xl:w-max m-10 flex justify-center ">
             <img src={Logo} alt="NSM" className="w-96" />
           </div>
         </div>

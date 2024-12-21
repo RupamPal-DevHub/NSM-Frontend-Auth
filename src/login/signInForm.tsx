@@ -1,21 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PasswordInputSingle from "../components/PasswordInputSingle";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { loginCaptcha, loginBase } from "../apiCalls/apiCalls";
 
 const SignInForm = () => {
   const Navigate = useNavigate();
+  const [captcha, setCaptcha] = useState({});
   const [passwordData, setPasswordData] = useState({
     password: "",
   });
 
+  useEffect(() => {
+    const fetchCaptcha = async () => {
+      try {
+        const data: any = await loginCaptcha();
+        if (data) {
+          setCaptcha(data.image);
+        } else {
+          console.error("Captcha not found in response");
+        }
+      } catch (error) {
+        console.error("Error fetching captcha:", error);
+      }
+    };
+    fetchCaptcha();
+  }, []);
+
   const handlePasswordChange = (updatedPasswordData: { password: string }) => {
     setPasswordData(updatedPasswordData);
   };
-  function handleSubmit(e: any) {
+  // function handleSubmit(e: any) {
+  //   e.preventDefault();
+  //   Navigate("/signinverification");
+  // }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    Navigate("/signinverification");
-  }
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data: any = {
+      email: formData.get("email")?.toString().trim(),
+      password: passwordData.password.trim(),
+      captcha: formData.get("captcha")?.toString().trim(),
+    };
+
+    console.log("Form Data:", data);
+
+    try {
+      await loginBase(data);
+      Navigate("/signinverification");
+    } catch (error: any) {
+      alert(error.response?.data.message);
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
   return (
     <>
       <ArrowLeft
@@ -65,8 +107,8 @@ const SignInForm = () => {
                     Forget Password?
                   </p>
                 </div>
-                <div className="w-32 h-14 border border-gray-700">
-                  <img src="" alt="Captcha" />
+                <div className="w-28 border border-gray-700">
+                  <img src={`${captcha}`} alt="Captcha" />
                 </div>
                 <input
                   type="text"

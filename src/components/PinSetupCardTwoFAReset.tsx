@@ -77,7 +77,7 @@ const PinSetupCardTwoFAReset = () => {
           onChange={(e) => handlePinChange(e, index, setState, state)}
           onKeyDown={(e) => handleKeyDown(e, index, setState, state)}
           maxLength={1}
-          className="w-12 h-12 text-center text-xl bg-blue-50 border border-maintheme rounded-lg focus:outline-none focus:ring-2 focus:ring-maintheme"
+          className="w-10 h-10 sm:w-12 sm:h-12  text-center text-xs md:text-xl bg-blue-50 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
     ));

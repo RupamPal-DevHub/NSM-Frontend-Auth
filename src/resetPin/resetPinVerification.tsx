@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { verifyForgotPinOtp } from "../apiCalls/apiCalls";
 
 const ResetPinVerification = () => {
   const Navigate = useNavigate();
@@ -16,10 +17,29 @@ const ResetPinVerification = () => {
       setResendDisabled(false);
     }
   }, [timer, resendDisabled]);
-  function handleSubmit(e: any) {
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    Navigate("/resetpin");
-  }
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = {
+      emailOtp: Number(formData.get("emailOtp")),
+      phoneOtp: Number(formData.get("phoneOtp")),
+    };
+
+    console.log("Form Data:", data);
+
+    try {
+      await verifyForgotPinOtp(data);
+      Navigate("/resetpin");
+    } catch (error: any) {
+      alert(error.response?.data.message);
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
   return (
     <>
       <ArrowLeft
@@ -51,7 +71,7 @@ const ResetPinVerification = () => {
                   Enter The code Sent To E-mail
                   <input
                     type="number"
-                    name="email"
+                    name="emailOtp"
                     required
                     placeholder="Enter OTP"
                     className="my-2 w-full py-4 px-3 rounded-xl border font-semibold from-stone-900 bg-light-gray border-light-gray focus:outline-cyan text-xs"
@@ -64,7 +84,7 @@ const ResetPinVerification = () => {
                   Enter The code Sent To Phone Number
                   <input
                     type="number"
-                    name="email"
+                    name="phoneOtp"
                     required
                     placeholder="Enter OTP"
                     className="my-2 w-full py-4 px-3 rounded-xl border font-semibold from-stone-900 bg-light-gray border-light-gray focus:outline-cyan text-xs"

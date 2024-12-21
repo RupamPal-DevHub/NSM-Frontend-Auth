@@ -52,7 +52,9 @@ const SignUpForm = () => {
 
     try {
       await registerBase(data);
+      Navigate("/signupverification");
     } catch (error: any) {
+      alert(error.response?.data.message);
       console.error(
         "Registration failed:",
         error.response?.data || error.message

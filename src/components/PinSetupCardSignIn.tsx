@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import { Eye, EyeClosed } from "lucide-react"; // Visibility icons
 import { useNavigate } from "react-router-dom";
+import { loginVerifyPin } from "../apiCalls/apiCalls";
 
 const PinSetupCardSignIn = () => {
   const navigate = useNavigate();
@@ -51,10 +52,22 @@ const PinSetupCardSignIn = () => {
     }
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const pinValue: string = pin.join("");
+    const data = { pin: pinValue };
     if (pinValue.length === 6) {
-      navigate("/signintwofa");
+      try {
+        console.log(data);
+        const response = await loginVerifyPin(data);
+        console.log(response);
+        navigate("/signinqrcode", { state: { response } });
+      } catch (error: any) {
+        alert(error.response?.data.message);
+        console.error(
+          "Registration failed:",
+          error.response?.data || error.message
+        );
+      }
 
       console.log({
         pin: pinValue,
@@ -63,9 +76,8 @@ const PinSetupCardSignIn = () => {
       console.log({
         pin: pinValue,
       });
-
-      console.log(
-        "Pin Setup Failed! please use same pin in both fields and make sure it's 6 digits long."
+      alert(
+        "Pin Setup Failed! Use same pin in both fields and make sure it's 6 digits long."
       );
     }
   };
@@ -85,7 +97,7 @@ const PinSetupCardSignIn = () => {
           onChange={(e) => handlePinChange(e, index, setState, state)}
           onKeyDown={(e) => handleKeyDown(e, index, setState, state)}
           maxLength={1}
-          className="w-12 h-12 text-center text-xl bg-blue-50 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-10 h-10 sm:w-12 sm:h-12  text-center text-xs md:text-xl bg-blue-50 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-maintheme"
         />
       </div>
     ));

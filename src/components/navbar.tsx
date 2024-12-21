@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Globe, ChevronDown, Menu, X } from "lucide-react";
 import nsmLogo from "../assets/images/image.png";
-
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 
 const Navbar: React.FC = () => {
@@ -76,7 +74,7 @@ const Navbar: React.FC = () => {
         {/* Login Button */}
         <button
           className="w-[80px] md:w-[90px] lg:w-[104px] h-[40px] sm:h-[45px] md:h-[50px] bg-[#00D1FF] rounded-[10px] flex items-center justify-center"
-          onClick={() => navigate("/signinpage")}
+          onClick={() => navigate("/signinhome")}
         >
           <span className="font-raleway font-semibold text-[14px] md:text-[15px] lg:text-[16px] text-white">
             Login

@@ -3,15 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 const SignInTwoFA = () => {
   const Navigate = useNavigate();
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    Navigate("/signinbackupcode");
-  }
+
   return (
     <>
       <ArrowLeft
         className="m-5 lg:m-10 absolute cursor-pointer"
-        onClick={() => Navigate("/signinpin")}
+        onClick={() => Navigate("/signinqrcode")}
       />
       <div className="w-full flex justify-center items-center">
         <div className="flex flex-wrap w-[90%] lg:w-[70%]  justify-between ">
@@ -26,7 +23,7 @@ const SignInTwoFA = () => {
           <div className="h-max lg:h-screen flex items-center mt-10 lg:mt-0 w-full lg:w-max">
             <div className="w-full lg:w-96  p-8 shadow-2xl rounded-xl my-2 ">
               <p className="my-4 font-bold text-2xl">Verification</p>
-              <form onSubmit={(e) => handleSubmit(e)}>
+              <form>
                 <input
                   type="number"
                   name="email"

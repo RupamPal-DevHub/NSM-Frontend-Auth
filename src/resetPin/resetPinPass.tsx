@@ -2,6 +2,7 @@ import { useState } from "react";
 import PasswordInputSingle from "../components/PasswordInputSingle";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { verifyForgotPinPassword } from "../apiCalls/apiCalls";
 
 const SignInForm = () => {
   const Navigate = useNavigate();
@@ -13,10 +14,25 @@ const SignInForm = () => {
     setPasswordData(updatedPasswordData);
   };
 
-  function handleSubmit(e: any) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    Navigate("/resetpinverification");
-  }
+    const data: any = {
+      password: passwordData.password.trim(),
+    };
+
+    console.log("Form Data:", data);
+
+    try {
+      await verifyForgotPinPassword(data);
+      Navigate("/resetpinverification");
+    } catch (error: any) {
+      alert(error.response?.data.message);
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
+    }
+  };
 
   return (
     <>

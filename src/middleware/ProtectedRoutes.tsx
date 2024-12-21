@@ -51,6 +51,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, path }) => {
     (state: AuthState) => state.auth
   );
 
+  return <>{children}</>;
+
   // Register-related routes
 
   if (path === "signupverification" && !register.signupverification) {

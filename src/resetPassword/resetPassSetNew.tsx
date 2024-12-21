@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { resetPassword } from "../apiCalls/apiCalls";
 
 const ResetPassSetNew = () => {
   const Navigate = useNavigate();
@@ -17,10 +18,27 @@ const ResetPassSetNew = () => {
     }
   }, [timer, resendDisabled]);
 
-  function handleSubmit(e: any) {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    Navigate("/resetpassdone");
-  }
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data: any = {
+      newPassword: formData.get("newPassword"),
+      confirmpassword: formData.get("confirmpassword"),
+    };
+
+    console.log("Form Data:", data);
+
+    try {
+      await resetPassword(data);
+      Navigate("/resetpassdone");
+    } catch (error: any) {
+      alert(error.response?.data.message);
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
+    }
+  };
 
   return (
     <>
@@ -45,8 +63,8 @@ const ResetPassSetNew = () => {
                 <label htmlFor="E-mail" className="font-bold text-xs">
                   Enter Your New Password
                   <input
-                    type="email"
-                    name="email"
+                    type="text"
+                    name="newPassword"
                     required
                     placeholder="Enter Password"
                     className="my-2 w-full py-4 px-3 rounded-xl border font-semibold from-stone-900 bg-light-gray border-light-gray focus:outline-cyan text-xs"
@@ -56,8 +74,8 @@ const ResetPassSetNew = () => {
                 <label htmlFor="E-mail" className="font-bold text-xs">
                   Confirm Your New Password
                   <input
-                    type="email"
-                    name="email"
+                    type="text"
+                    name="confirmpassword"
                     required
                     placeholder="Confirm Password"
                     className="my-2 w-full py-4 px-3 rounded-xl border font-semibold from-stone-900 bg-light-gray border-light-gray focus:outline-cyan text-xs"
