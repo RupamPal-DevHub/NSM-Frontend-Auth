@@ -20,10 +20,10 @@ const ResetTwoFABCode = () => {
             <p className="font-bold text-4xl ">Enter BackUp Codes</p>
 
             <p className="font-bold my-5">
-              Enter the backup code from the 10 codes sent
-              <br />
-              to you while signing up! or Request a new one
-              <span className="text-maintheme">here.</span>
+              Enter the backup code from the 10 codes <br />
+              sent to you while signing up! or Request a <br />
+              new one
+              <span className="text-maintheme cursor-pointer"> here.</span>
             </p>
           </div>
           <div className="h-max lg:h-screen flex items-center mt-10 lg:mt-0 w-full lg:w-max">

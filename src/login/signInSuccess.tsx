@@ -1,8 +1,11 @@
-import Logo from "../../public/ladysuccess.png";
+import Logo from "../assets/images/ladysuccess.png";
+import Navbar from "../components/navbar";
+
 const SignInSuccess = () => {
   return (
     <>
-      <div className="w-full  mt-24">
+      <Navbar />
+      <div className="w-full  mt-40">
         <p className="font-bold text-2xl md:text-4xl text-center p-4">
           You Are Logged In Successfully{" "}
         </p>

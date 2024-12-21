@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { ReactNode } from "react";
 
 interface ProtectedRouteProps {
-  children: ReactNode; // Represents the child components wrapped by the ProtectedRoute
-  path: string; // Represents the path to check for protection logic
+  children: ReactNode;
+  path: string;
 }
 
 interface AuthState {
@@ -47,45 +47,114 @@ interface AuthState {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, path }) => {
-  const { register, signin, resetpass, resetpin, reset2fa, logout } =
-    useSelector((state: AuthState) => state.auth);
+  const { register, signin, resetpass, resetpin, reset2fa } = useSelector(
+    (state: AuthState) => state.auth
+  );
 
   // Register-related routes
-  if (path === "verification" && !register.verification) {
-    return <Navigate to="/signup" replace />;
+
+  if (path === "signupverification" && !register.signupverification) {
+    return <Navigate to="/signupform" replace />;
   }
 
-  if (path === "setuppin" && !register.setUpPin) {
-    return <Navigate to="/signup" replace />;
+  if (path === "signuppin" && !register.signuppin) {
+    return <Navigate to="/signupform" replace />;
   }
 
-  if (path === "welcomeaboard" && !register.welcomeaboard) {
-    return <Navigate to="/signup" replace />;
+  if (path === "signupdone" && !register.signupdone) {
+    return <Navigate to="/signupform" replace />;
   }
 
   // Login-related routes
-  if (path === "LoginVerification" && !signin.loginverification) {
+
+  if (path === "signinverification" && !signin.signinverification) {
     return <Navigate to="/signinpage" replace />;
   }
 
-  if (path === "enterpin" && !signin.enterpin) {
-    return <Navigate to="/signinpage" replace />;
+  if (path === "signinpin" && !signin.signinpin) {
+    return <Navigate to="/signinform" replace />;
   }
 
   if (path === "qrcodeverify" && !signin.qrcodeverify) {
-    return <Navigate to="/signinpage" replace />;
+    return <Navigate to="/signinform" replace />;
   }
 
-  if (path === "loginentertwofa" && !signin.loginentertwofa) {
-    return <Navigate to="/signinpage" replace />;
+  if (path === "signintwofa" && !signin.signintwofa) {
+    return <Navigate to="/signinform" replace />;
   }
 
-  if (path === "backupcode" && !signin.backupcode) {
-    return <Navigate to="/signinpage" replace />;
+  if (path === "signinbackupcode" && !signin.signinbackupcode) {
+    return <Navigate to="/signinform" replace />;
   }
 
-  if (path === "loginSuccess" && !signin.loginSuccess) {
-    return <Navigate to="/signinpage" replace />;
+  if (path === "signinsuccess" && !signin.signinsuccess) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  // Reset Password-related routes
+
+  if (path === "resetpassform" && !resetpass.resetpassform) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resetpassverification" && !resetpass.resetpassverification) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resetpasssetnew" && !resetpass.resetpasssetnew) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resetpassdone" && !resetpass.resetpassdone) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resetpasssuccess" && !resetpass.resetpasssuccess) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  // Reset Pin-related routes
+
+  if (path === "resetpinform" && !resetpin.resetpinform) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resetpinpass" && !resetpin.resetpinpass) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resetpinverification" && !resetpin.resetpinverification) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resetpin" && !resetpin.resetpin) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resetpinsuccess" && !resetpin.resetpinsuccess) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  // Reset 2fa-related routes
+
+  if (path === "resettwofaform" && !reset2fa.resettwofaform) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resettwofaverification" && !reset2fa.resettwofaverification) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resettwofapass" && !reset2fa.resettwofapass) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resettwofapin" && !reset2fa.resettwofapin) {
+    return <Navigate to="/signinform" replace />;
+  }
+
+  if (path === "resettwofabcode" && !reset2fa.resettwofabcode) {
+    return <Navigate to="/signinform" replace />;
   }
 
   return <>{children}</>;

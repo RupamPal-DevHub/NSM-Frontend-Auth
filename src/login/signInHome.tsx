@@ -1,10 +1,12 @@
-import Logo from "../../public/logo.png";
+import Logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/navbar";
 
 const SignInHome = () => {
   const Navigate = useNavigate();
   return (
     <>
+      <Navbar />
       <div className="w-full h-screen flex justify-center items-center">
         <div className="flex flex-wrap-reverse w-[80%] sm:w-[60%]  justify-between">
           <div>
@@ -21,7 +23,10 @@ const SignInHome = () => {
             <p className="font-bold">
               If you do not have an account <br />
               You can{" "}
-              <span className="text-maintheme" onClick={() => Navigate("/")}>
+              <span
+                className="text-maintheme cursor-pointer"
+                onClick={() => Navigate("/")}
+              >
                 Sign Up
               </span>{" "}
               here !

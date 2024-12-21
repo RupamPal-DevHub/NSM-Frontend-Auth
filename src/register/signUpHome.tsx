@@ -1,10 +1,12 @@
-import Logo from "../../public/logo.png";
+import Logo from "../assets/images/image.png";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/navbar";
 
 const SignUpHome = () => {
   const Navigate = useNavigate();
   return (
     <>
+      <Navbar />
       <div className="w-full h-screen flex justify-center items-center">
         <div className="flex flex-wrap-reverse w-[80%] sm:w-[60%]  justify-between">
           <div>

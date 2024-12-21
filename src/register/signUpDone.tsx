@@ -1,8 +1,10 @@
-import Logo from "../../public/ladysuccess.png";
+import Logo from "../assets/images/ladysuccess.png";
+import Navbar from "../components/navbar";
 
 const SignUpDone = () => {
   return (
     <>
+      <Navbar />
       <div className="w-full h-screen flex justify-center items-center">
         <div className="flex flex-wrap-reverse w-[80%] sm:w-[60%]  justify-between items-center">
           <div>

@@ -26,6 +26,7 @@ import ResetTwoFAVerification from "../resetTwoFA/resetTwoFAVerification";
 import ResetTwoFAPass from "../resetTwoFA/resetTwoFAPass";
 import ResetTwoFAPin from "../resetTwoFA/resetTwoFAPin";
 import ResetTwoFABCode from "../resetTwoFA/resetTwoFABCode";
+// import ProtectedRoute from "../middleware/ProtectedRoutes";
 
 const router = createBrowserRouter([
   //-------------------------------------sign up flow-----------------------------------------------------

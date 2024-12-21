@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { Globe, ChevronDown, Menu, X } from "lucide-react";
-import nsmLogo from "../../assets/images/image.png";
+import nsmLogo from "../assets/images/image.png";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 
-const NavbarExchange: React.FC = () => {
+const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="flex flex-wrap justify-between items-center w-full h-[90px] px-4 sm:px-[5px] md:px-[15px] lg:px-[60px] bg-white border border-[#EAEAEA] absolute">
+    <nav className="flex flex-wrap justify-between items-center w-full h-[90px] px-4 sm:px-[5px] md:px-[15px] lg:px-[60px] bg-white border border-[#EAEAEA] absolute top-0">
       <div className="flex items-center gap-2 w-auto h-[50px]">
-        <Avatar className="w-[134px] sm:w-[113px] lg:w-[169px] md:w-[155px] h-[50px]">
-          <AvatarImage src={nsmLogo} className="object-contain" alt="Logo" />
-
-          <AvatarFallback>NSM</AvatarFallback>
-        </Avatar>
+        <img src={nsmLogo} alt="" className="h-12" />
       </div>
 
       {/* Hamburger Button */}
@@ -91,4 +87,4 @@ const NavbarExchange: React.FC = () => {
   );
 };
 
-export default NavbarExchange;
+export default Navbar;
